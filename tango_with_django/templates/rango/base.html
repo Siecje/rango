@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Rango - {% block title %}How to Tango with Django!{% endblock title %}</title>
+    </head>
+
+    <body>
+
+        <ul class="nav nav-list">
+                <li class="nav-header">Find a Category</li>
+                <form>
+                <label></label>
+                <li><input  class="search-query span10" type="text" name="suggestion" value="" id="suggestion" ></li>
+                </form>
+        </ul>
+        {# {% if cat_list %} #}
+            <div id="cats">
+                {% include 'rango/category_list.html' with cat_list=cat_list %}
+            </div>
+        {# {% endif %} #}
+        <hr>
+        {% block body_block %}
+            This is body_block's default content.
+        {% endblock body_block%}
+
+        <hr />
+
+        <div>
+            <ul>
+            {% if user.is_authenticated %}
+                <li><a href="/rango/restricted/">Restricted Page</a></li>
+                <li><a href="/rango/logout/">Logout</a></li>
+                <li><a href="/rango/add_category/">Add a New Category</a></li>
+            {% else %}
+                <li><a href="/rango/register/">Register Here</a></li>
+                <li><a href="/rango/login/">Login</a></li>
+            {% endif %}
+
+                <li><a href="/rango/about/">About</a></li>
+            </ul>
+        </div>
+    </body>
+</html>
