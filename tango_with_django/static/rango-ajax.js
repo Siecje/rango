@@ -14,3 +14,14 @@ $('#suggestion').keyup(function(){
          $('#cats').html(data);
         });
 });
+
+/*
+$('#ajax-add-page').click(function(){
+    var page_name = $(this).attr("data-id_title);
+    var page_url = $(this).attr("data-id_url");
+
+    // need django url tag
+    $.get('/rango/
+
+}
+*/

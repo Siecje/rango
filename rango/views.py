@@ -9,6 +9,11 @@ from django.utils.http import urlencode
 from .models import Category, Page
 from .forms import CategoryForm, UserForm, UserProfileForm, PageForm
 
+def encode_url(str):
+    return str.replace(' ', '_')
+
+def decode_url(str):
+    return str.replace('_', ' ')
 
 def index(request):
     category_list = Category.objects.order_by('-likes')[:5]
@@ -49,10 +54,12 @@ def category(request, slug):
         #TODO: error message
         return HttpResponseRedirect(reverse('index'))
 
+    form = PageForm()
     return render(request, 'rango/category.html',
           {
            'category': category,
            'pages': pages,
+           'form': form,
           })
 
 
@@ -65,6 +72,7 @@ def add_category(request):
         if form.is_valid():
             form.save(commit=True)
             return HttpResponseRedirect(reverse('index'))
+
 
     return render(request, 'rango/add_category.html', {'form': form})
 
@@ -184,7 +192,7 @@ def get_category_list(max_results=0, starts_with=''):
             cat_list = cat_list[:max_results]
 
     for cat in cat_list:
-        cat.url = urlencode(cat.name)
+        cat.url = encode_url(cat.name)
 
     return cat_list
 
@@ -199,5 +207,5 @@ def suggest_category(request):
 
     cat_list = get_category_list(8, starts_with)
 
-    return render('rango/category_list.html', {'cat_list': cat_list })
+    return render(request, 'rango/category_list.html', {'cat_list': cat_list })
 

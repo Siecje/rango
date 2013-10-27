@@ -26,9 +26,22 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-       <a href="{% url 'add_page' category.slug %}">Add a Page</a>
+        <form id="page_form" method="post" action="{% url 'add_page' category.slug %}">
+
+            {% csrf_token %}
+            {% for hidden in form.hidden_fields %}
+                {{ hidden }}
+            {% endfor %}
+
+            {% for field in form.visible_fields %}
+                {{ field.errors }}
+                {{ field.help_text}}
+                {{ field }}<br>
+            {% endfor %}
+
+            <input type="button" id="ajax-add-page" value="Create Page" />
+        </form>
+       {#<a href="{% url 'add_page' category.slug %}">Add a Page</a>#}
     {% endif %}
-    <script src="{% static 'jquery-2.0.3.min.js' %}"></script>
-    <script src="{% static 'rango-ajax.js' %}"></script>
 
 {% endblock %}

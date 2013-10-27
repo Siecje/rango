@@ -5,7 +5,7 @@
 {% block body_block %}
         <h1>Add a Page</h1>
 
-        <form id="page_form" method="post">
+        <form id="page_form" action="" method="post">
 
             {% csrf_token %}
             {% for hidden in form.hidden_fields %}
